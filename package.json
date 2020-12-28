@@ -1,0 +1,32 @@
+{
+  "name": "nodejs_tdd",
+  "version": "1.0.0",
+  "description": "nodejs_tdd",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "should": "^13.2.3",
+    "supertest": "^6.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  },
+  "scripts": {
+    "test": "mocha index.spec.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soomok-lee/nodejs_tdd.git"
+  },
+  "keywords": [
+    "nodejs",
+    "tdd"
+  ],
+  "author": "Soomok Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soomok-lee/nodejs_tdd/issues"
+  },
+  "homepage": "https://github.com/soomok-lee/nodejs_tdd#readme"
+}
