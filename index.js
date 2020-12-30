@@ -10,6 +10,7 @@ var users = [
     {id:4, name: 'lia'},
 ];
 
+// GET
 app.get('/users', function(req, res) {
     req.query.limit = req.query.limit || 10;
     const limit = parseInt(req.query.limit, 10);
@@ -18,14 +19,24 @@ app.get('/users', function(req, res) {
     res.json(users.slice(0, limit));
 });
 
+// GET
 app.get('/users/:id', function(req, res) {
    const id = parseInt(req.params.id, 10);
    if(Number.isNaN(id)) return res.status(400).end();
     
-   const user = users.filter((user)=> user.id === id)[0];
+   const user = users.filter(user=> user.id === id)[0];
    if(!user) return res.status(404).end();
 
    res.json(user);
+});
+
+// DELETE
+app.delete('/users/:id', (req, res)=> {
+    const id = parseInt(req.params.id, 10);
+    if(Number.isNaN(id)) return res.status(400).end();
+    
+    users = users.filter(user=> user.id !== id); // 해당 id user만 리스트에서 삭제
+    res.status(204).end();
 });
 
 app.listen(3000, function() {

@@ -75,3 +75,23 @@ describe('GET /users/:id', ()=> {
         });  
     });
 });
+
+describe('DELETE /users/:id', ()=> {
+    describe('success, ', ()=> {
+        it('response with the status code 204.', (done)=> {
+            request(app)
+                .delete('/users/1')
+                .expect(204)
+                .end(done);   
+        });    
+    });
+
+    describe('fail, ', ()=> {
+        it('response with the status code 400 if the id is not Number.', (done)=> {
+            request(app)
+                .delete('/users/one')
+                .expect(400)
+                .end(done);  
+        });   
+    });
+});
