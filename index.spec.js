@@ -15,6 +15,7 @@ const app = require('./index');
 const request = require('supertest'); // npm i supertest --save-dev
 const should = require('should');
 
+// GET
 describe('GET /users', ()=> {
     describe('success, ', ()=> {
         it('response with an array of user objects.', (done)=> {
@@ -47,6 +48,7 @@ describe('GET /users', ()=> {
     });
 });
 
+// GET
 describe('GET /users/:id', ()=> {
     describe('success, ', ()=> {
         it('response with an user object with id 1.', (done)=> {
@@ -76,6 +78,7 @@ describe('GET /users/:id', ()=> {
     });
 });
 
+// DELETE
 describe('DELETE /users/:id', ()=> {
     describe('success, ', ()=> {
         it('response with the status code 204.', (done)=> {
@@ -91,6 +94,50 @@ describe('DELETE /users/:id', ()=> {
             request(app)
                 .delete('/users/one')
                 .expect(400)
+                .end(done);  
+        });   
+    });
+});
+
+// POST
+describe('POST /users', ()=> {
+    describe('success, ', ()=> {
+        let name = 'daniel', 
+            body;
+        before(done=> {
+            request(app)
+                .post('/users')
+                .send({name: name})
+                .expect(201)
+                .end((err, res)=> {
+                    body = res.body;
+                    done();
+                });
+        });
+
+        it('response with created user.', ()=> {
+            body.should.have.property('id');
+        });  
+
+        it('response with input name', ()=> {
+            body.should.have.property('name', name);
+        });    
+    });
+
+    describe('fail, ', ()=> {
+        it('response with the status code 400 if name is missing.', (done)=> {
+            request(app)
+                .post('/users')
+                .send({})
+                .expect(400)
+                .end(done);  
+        });   
+
+        it('response with the status code 409 if name is conflicting.', (done)=> {
+            request(app)
+                .post('/users')
+                .send({name: 'daniel'})
+                .expect(409)
                 .end(done);  
         });   
     });
