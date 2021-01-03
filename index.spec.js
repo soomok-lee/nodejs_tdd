@@ -142,3 +142,52 @@ describe('POST /users', ()=> {
         });   
     });
 });
+
+// PUT
+describe('PUT /users/:id', ()=> {
+    describe('success, ', ()=> {        
+        it('response with updated user name.', (done)=> {
+            const name = 'charlie';
+            request(app)
+                .put('/users/3')
+                .send({name: name})
+                .end((err, res)=> {
+                    res.body.should.have.property('name', name);
+                    done();
+                });
+        });   
+    });
+
+    describe('fail, ', ()=> {
+        it('response with the status code 400 if the id is not Number.', (done)=> {
+            request(app)
+                .put('/users/one')
+                .expect(400)
+                .end(done);  
+        }); 
+
+        it('response with the status code 400 if name is missing.', (done)=> {
+            request(app)
+                .put('/users/1')
+                .send({})
+                .expect(400)
+                .end(done);  
+        });  
+
+        it('response with the status code 404 if the id is not found.', (done)=> {
+            request(app)
+                .put('/users/999')
+                .send({name: 'kate'})
+                .expect(404)
+                .end(done);  
+        });  
+
+        it('response with the status code 409 if name is conflicting.', (done)=> {
+            request(app)
+                .put('/users/3')
+                .send({name: 'mari'})
+                .expect(409)
+                .end(done);  
+        });   
+    })
+});
