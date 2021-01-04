@@ -4,14 +4,14 @@
 
 // package.json
 "scripts": {
-    "test": "mocha index.spec.js",
+    "test": "mocha api/user/user.spec.js",
     "start": "node index.js"
   }
 
 // npm test
 // npm start
 */
-const app = require('./index');
+const app = require('../../');
 const request = require('supertest'); // npm i supertest --save-dev
 const should = require('should');
 
