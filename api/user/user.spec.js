@@ -12,13 +12,19 @@
 // npm start
 */
 const app = require('../../');
+const models = require('../../models')
 const request = require('supertest'); // npm i supertest --save-dev
 const should = require('should');
 
+// .only 해당 테스트만 실행
 // GET
 describe('GET /users', ()=> {
-    describe('success, ', ()=> {
-        it('response with an array of user objects.', (done)=> {
+    describe('success, ', ()=> { 
+        const users =  [{name: 'ella'}, {name: 'mari'}, {name: 'jessie'}, {name: 'leah'}];
+        before(()=> models.sequelize.sync({force: true}));
+        before(()=> models.User.bulkCreate(users));
+
+        it('response with an array of user objects.', (done)=> { 
             request(app)
                 .get('/users')
                 .end((err, res)=> {
@@ -50,6 +56,10 @@ describe('GET /users', ()=> {
 
 // GET
 describe('GET /users/:id', ()=> {
+    const users =  [{name: 'ella'}, {name: 'mari'}, {name: 'jessie'}, {name: 'leah'}];
+        before(()=> models.sequelize.sync({force: true}));
+        before(()=> models.User.bulkCreate(users));
+
     describe('success, ', ()=> {
         it('response with an user object with id 1.', (done)=> {
             request(app)
@@ -80,6 +90,10 @@ describe('GET /users/:id', ()=> {
 
 // DELETE
 describe('DELETE /users/:id', ()=> {
+    const users =  [{name: 'ella'}, {name: 'mari'}, {name: 'jessie'}, {name: 'leah'}];
+        before(()=> models.sequelize.sync({force: true}));
+        before(()=> models.User.bulkCreate(users));
+
     describe('success, ', ()=> {
         it('response with the status code 204.', (done)=> {
             request(app)
@@ -101,6 +115,10 @@ describe('DELETE /users/:id', ()=> {
 
 // POST
 describe('POST /users', ()=> {
+    const users =  [{name: 'ella'}, {name: 'mari'}, {name: 'jessie'}, {name: 'leah'}];
+        before(()=> models.sequelize.sync({force: true}));
+        before(()=> models.User.bulkCreate(users));
+
     describe('success, ', ()=> {
         let name = 'daniel', 
             body;
@@ -145,6 +163,10 @@ describe('POST /users', ()=> {
 
 // PUT
 describe('PUT /users/:id', ()=> {
+    const users =  [{name: 'ella'}, {name: 'mari'}, {name: 'jessie'}, {name: 'leah'}];
+        before(()=> models.sequelize.sync({force: true}));
+        before(()=> models.User.bulkCreate(users));
+
     describe('success, ', ()=> {        
         it('response with updated user name.', (done)=> {
             const name = 'charlie';
